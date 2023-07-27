@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  admin_db:
+    image: mysql:5.7.22
+    ports:
+      - "33066:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+    volumes:
+      - db_data:/var/lib/mysql
+
+  admin_frontend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - admin_db
+
+volumes:
+  db_data:
