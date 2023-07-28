@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        
+
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
 
@@ -33,12 +33,36 @@ class AuthController extends Controller
     {
         $user = User::create(
             $request->only('first_name', 'last_name', 'email')
-            + [
-                'password' => Hash::make($request->input('password')),
-                'is_influencer' => 1,
-            ]
+                + [
+                    'password' => Hash::make($request->input('password')),
+                    'is_influencer' => 1,
+                ]
         );
 
         return response($user, Response::HTTP_CREATED);
+    }
+    public function user()
+    {
+        return \Auth::user();
+    }
+
+    public function updateInfo(Request $request)
+    {
+        $user = \Auth::user();
+
+        $user->update($request->only('first_name', 'last_name', 'email'));
+
+        return response($user, Response::HTTP_ACCEPTED);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = \Auth::user();
+
+        $user->update([
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        return response($user, Response::HTTP_ACCEPTED);
     }
 }
