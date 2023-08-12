@@ -42,6 +42,18 @@ class ProductController
 
 	public function update(Request $request, $id)
 	{
+		$file = $request->file('image');
+		$name = Str::random(10);
+		$url = Storage::putFileAs('images', $file, $name);
+		$product = Product::find($id)->update([
+
+			'title' => $request->input('title'),
+			'description' => $request->input('description'),
+			'image' => $url,
+			'price' => $request->input('price'),
+		]);
+		return response($product, HttpFoundationResponse::HTTP_CREATED);
+		$file->extension();
 	}
 
 	public function destroy($id)
