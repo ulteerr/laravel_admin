@@ -11,6 +11,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\User::class, 20)->create();
+        $this->call([
+            ProductSeeder::class,
+            OrderSeeder::class,
+            OrderItemSeeder::class,
+            RoleSeeder::class,
+            UserRoleSeeder::class
+        ]);
     }
 }
