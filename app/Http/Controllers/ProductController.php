@@ -11,7 +11,7 @@ class ProductController
 
 	public function index()
 	{
-		
+		Product::paginate(10);
 	}
 
 	public function show($id)

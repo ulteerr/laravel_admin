@@ -15,4 +15,6 @@ Route::group([
 	Route::put('users/info', [AuthController::class, 'updateInfo']);
 	Route::put('users/password', [AuthController::class, 'updatePassword']);
     Route::apiResource('users', UserController::class);
+    Route::apiResource('roles', RoleController::class);
+    Route::apiResource('products', ProductController::class);
 });
